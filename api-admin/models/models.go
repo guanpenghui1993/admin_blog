@@ -41,5 +41,5 @@ func init() {
 }
 
 func Close() {
-	defer link.Close()
+	link.Close()
 }

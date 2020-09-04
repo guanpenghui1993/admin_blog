@@ -15,15 +15,22 @@ func Printdemo(c *gin.Context) {
 
 	list, err := admin.Select()
 
-	// if err != nil {
-	// 	c.String(201, err)
-	// }
+	if err != nil {
+		c.JSON(204, err)
+	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"code":    1,
-		"message": err,
-		"data":    list,
-	})
+	c.JSON(http.StatusOK, returnJson(200, "获取成功", list))
+}
 
-	// c.String(200, "hello admin controllers param is "+id)
+func returnJson(code int, message string, data interface{}) gin.H {
+
+	var result gin.H
+
+	result = make(map[string]interface{})
+
+	result["code"] = code
+	result["message"] = message
+	result["data"] = data
+
+	return result
 }

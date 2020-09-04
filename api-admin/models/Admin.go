@@ -15,7 +15,7 @@ type Admin struct {
 
 func (a *Admin) Select() ([]*Admin, error) {
 
-	defer Close()
+	// defer Close()
 
 	var adminList []*Admin
 
