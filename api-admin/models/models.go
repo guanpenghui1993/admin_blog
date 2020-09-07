@@ -14,6 +14,7 @@ var (
 	err  error
 )
 
+// 链接数据库
 func init() {
 
 	connectString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local",
