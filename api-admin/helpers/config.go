@@ -9,6 +9,10 @@ import (
 
 const configPath string = "config/application.ini"
 
+type Common struct {
+	GinLogs bool
+}
+
 type Path struct {
 	Logs string
 }
@@ -21,20 +25,22 @@ type Server struct {
 }
 
 type Database struct {
-	Type     string
-	User     string
-	Password string
-	Dbname   string
+	Type        string
+	User        string
+	Password    string
+	Dbname      string
 	Host        string
 	Port        uint
 	Charset     string
 	TablePrefix string
+	Debug       bool
 }
 
 var (
 	PathConfig     = new(Path)
 	ServerConfig   = new(Server)
 	DatabaseConfig = new(Database)
+	CommonConfig   = new(Common)
 	cfg            *ini.File
 	err            error
 )

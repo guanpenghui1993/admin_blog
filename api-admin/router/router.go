@@ -11,6 +11,11 @@ var Route *gin.Engine
 
 func init() {
 
+	// 日志文件
+	if helpers.CommonConfig.GinLogs {
+		gin.DefaultWriter = helpers.Access(helpers.PathConfig.Logs)
+	}
+
 	// 初始化router引擎
 	Route = gin.Default()
 

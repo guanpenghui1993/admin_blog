@@ -37,9 +37,5 @@ func init() {
 
 	link.SingularTable(true)
 
-	link.LogMode(true)
-}
-
-func Close() {
-	link.Close()
+	link.LogMode(helpers.DatabaseConfig.Debug)
 }
