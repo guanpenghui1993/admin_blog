@@ -10,11 +10,13 @@ import (
 const configPath string = "config/application.ini"
 
 type Common struct {
-	GinLogs bool
+	TokenExpired time.Duration
+	TokenSecret  string
+	HeaderToken  string
 }
 
 type Path struct {
-	Logs string
+	ErrLogs string
 }
 
 type Server struct {
@@ -56,6 +58,7 @@ func init() {
 	mapTo("path", PathConfig)
 	mapTo("server", ServerConfig)
 	mapTo("database", DatabaseConfig)
+	mapTo("common", CommonConfig)
 }
 
 func mapTo(section string, paramNamePointer interface{}) {
