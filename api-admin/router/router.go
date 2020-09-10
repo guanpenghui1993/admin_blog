@@ -25,7 +25,7 @@ func init() {
 	// 绑定路由
 	admin := Route.Group("/admin")
 	{
-		admin.GET("/:id", controllers.Login)
+		admin.GET("/login", controllers.Login)
 	}
 }
 
