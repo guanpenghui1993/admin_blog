@@ -2,6 +2,8 @@ package services
 
 import (
 	"api-admin/models"
+	"crypto/md5"
+	"encoding/hex"
 )
 
 type AdminService struct {
@@ -13,16 +15,22 @@ func newAdminService() *AdminService {
 	return new(AdminService)
 }
 
-// 测试登录
-func (a *AdminService) Login(username, password string) bool {
+// 登录
+func (a *AdminService) Login(username, password string) (bool, error) {
 
 	var admin models.Admin
 
-	err := models.Link.Where("username = ? AND password = ?", username, password).First(&admin).Error
+	h := md5.New()
+
+	h.Write([]byte(password))
+
+	cipherStr := h.Sum(nil)
+
+	err := models.Link.Select("uid").Where("username = ? AND password = ?", username, hex.EncodeToString(cipherStr)).First(&admin).Error
 
 	if err != nil {
-		return false
+		return false, err
 	}
 
-	return true
+	return true, nil
 }
