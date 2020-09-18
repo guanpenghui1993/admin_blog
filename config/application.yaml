@@ -1,0 +1,49 @@
+# 公共配置
+common:
+
+  debug: false
+
+# 日志信息
+log:
+
+  error_log: logs/go_error.log
+  strace_log: logs/go_strace.log
+
+
+# jwt配置
+jwt:
+
+  expired: 3600
+  secret: v#z2QeXHYw#%C0VLnl
+  header: Authorization  
+
+
+# http服务参数
+http:
+  port: 80
+  readTimeout:  60
+  writeTimeout:  60
+
+
+# 数据库服务
+database:
+  
+  mysql:
+    
+    type: mysql
+    host: host.docker.internal
+    port: 3306
+    user: root
+    password: 123456
+    dbname: watt
+    charset: utf8
+    timeout: 10
+    prefix: watt_
+  
+  redis:    
+
+    host: localhost
+    password: xxxx
+    port: 6379
+    database: 0
+    timeout: 5
