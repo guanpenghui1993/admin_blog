@@ -2,8 +2,7 @@ package models
 
 import (
 	"fmt"
-	"watt/pkg/config"
-	"watt/pkg/helpers"
+	"watt/pkg/utils"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -17,27 +16,27 @@ var (
 // 链接数据库
 func init() {
 
-	connectString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local&timeout=%vs",
-		config.Conf.Database.Mysql.User,
-		config.Conf.Database.Mysql.Password,
-		config.Conf.Database.Mysql.Host,
-		config.Conf.Database.Mysql.Port,
-		config.Conf.Database.Mysql.Dbname,
-		config.Conf.Database.Mysql.Charset,
-		config.Conf.Database.Mysql.Timeout,
+	connectString := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local&timeout=%ds",
+		utils.Setting.Database.Mysql.User,
+		utils.Setting.Database.Mysql.Password,
+		utils.Setting.Database.Mysql.Host,
+		utils.Setting.Database.Mysql.Port,
+		utils.Setting.Database.Mysql.Dbname,
+		utils.Setting.Database.Mysql.Charset,
+		utils.Setting.Database.Mysql.Timeout,
 	)
 
-	Link, err = gorm.Open(config.Conf.Database.Mysql.Dbtype, connectString)
+	Link, err = gorm.Open(utils.Setting.Database.Mysql.Dbtype, connectString)
 
 	if err != nil {
-		helpers.H.Exit(err)
+		utils.Exit(err)
 	}
 
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
-		return config.Conf.Database.Mysql.Prefix + defaultTableName
+		return utils.Setting.Database.Mysql.Prefix + defaultTableName
 	}
 
 	Link.SingularTable(true)
 
-	Link.LogMode(config.Conf.Common.Debug)
+	Link.LogMode(utils.Setting.Common.Debug)
 }

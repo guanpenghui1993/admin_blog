@@ -1,6 +1,8 @@
-package config
+package utils
 
-import "time"
+import (
+	"time"
+)
 
 type configYaml struct {
 	Common struct {

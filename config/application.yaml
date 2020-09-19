@@ -1,7 +1,7 @@
 # 公共配置
 common:
 
-  debug: false
+  debug: true
 
 # 日志信息
 log:
@@ -20,7 +20,7 @@ jwt:
 
 # http服务参数
 http:
-  port: 80
+  port: 8080
   readTimeout:  60
   writeTimeout:  60
 
@@ -31,10 +31,11 @@ database:
   mysql:
     
     type: mysql
-    host: host.docker.internal
+    #host: host.docker.internal
+    host: localhost
     port: 3306
     user: root
-    password: 123456
+    password: root
     dbname: watt
     charset: utf8
     timeout: 10

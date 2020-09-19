@@ -1,4 +1,4 @@
-package config
+package utils
 
 import (
 	"flag"
@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	Conf configYaml
-	file string
+	Setting configYaml
+	file    string
 )
 
 func init() {
@@ -25,5 +25,5 @@ func init() {
 		log.Fatal("Fail to read file: %v - ", err)
 	}
 
-	yaml.Unmarshal(config, &Conf)
+	yaml.Unmarshal(config, &Setting)
 }

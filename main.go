@@ -1,8 +1,6 @@
 package main
 
-import (
-	"watt/server"
-)
+import "watt/server"
 
 func main() {
 	server.Run()

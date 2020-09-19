@@ -1,8 +1,8 @@
 package router
 
 import (
-	"watt/pkg/config"
 	"watt/pkg/controllers/admin"
+	"watt/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +13,7 @@ func init() {
 
 	var mode string
 
-	if config.Conf.Common.Debug {
+	if utils.Setting.Common.Debug {
 		mode = "debug"
 	} else {
 		mode = "release"

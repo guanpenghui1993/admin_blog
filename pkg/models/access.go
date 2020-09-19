@@ -1,7 +1,6 @@
 package models
 
 type Access struct {
-	ID     int
-	Roleid `gorm:"many2many:watt_role;"`
-	Menuid `gorm:"many2many:watt_menu;"`
+	Roleid uint `gorm:"type:int(10);not null"`
+	Menuid uint `gorm:"type:int(10);not null"`
 }
