@@ -6,24 +6,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 测试登录
-func Login(c *gin.Context) {
+type UserController struct {
+	BaseController
+}
+
+// 登录用户
+func (u *UserController) Login(c *gin.Context) {
 
 	// username := c.Param("username")
 
 	// password := c.Param("password")
-	services.UserService.Create()
-	// boolen, err := services.AdminServiceObject.Login("guanpenghui", "123456")
+	token, err := services.UserService.Login("guanpenghui", "123456")
 
-	// if err != nil {
-	// 	c.JSON(200, gin.H{"message": "用户名密码不匹配"})
-	// 	return
-	// }
+	if err != nil {
+		u.Response(c, 200, "token error", nil)
+		return
+	}
 
-	// if boolen {
-	// 	c.JSON(200, gin.H{"message": "登录成功"})
-	// 	return
-	// }
+	if token == "" {
+		u.Response(c, 200, "token error", nil)
+		return
+	}
 
-	c.JSON(200, gin.H{"message": "登录失败"})
+	u.Response(c, 200, "登录成功", map[string]string{"token": token})
 }

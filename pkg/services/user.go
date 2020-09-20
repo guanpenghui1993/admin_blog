@@ -1,9 +1,8 @@
 package services
 
 import (
-	"crypto/md5"
-	"encoding/hex"
-	"watt/pkg/models"
+	"watt/pkg/repository"
+	"watt/pkg/utils"
 )
 
 type userService struct {
@@ -14,27 +13,16 @@ var UserService = newUserService()
 func newUserService() *userService {
 	return new(userService)
 }
-func (u *userService) Create() {
-	var user models.User
-	models.Link.CreateTable(&user)
-}
 
 // 登录
-func (u *userService) Login(username, password string) (bool, error) {
+func (u *userService) Login(username, password string) (string, error) {
 
-	var user models.User
+	user := repository.UserRep.CheckUserByNamePwd(username, password)
 
-	h := md5.New()
+	if user.ID > 0 {
 
-	h.Write([]byte(password))
-
-	cipherStr := h.Sum(nil)
-
-	err := models.Link.Select("uid").Where("username = ? AND password = ?", username, hex.EncodeToString(cipherStr)).First(&user).Error
-
-	if err != nil {
-		return false, err
+		return utils.Token(user.ID)
 	}
 
-	return true, nil
+	return "", nil
 }

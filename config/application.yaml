@@ -13,16 +13,22 @@ log:
 # jwt配置
 jwt:
 
-  expired: 3600
+  expired: 3600 # 单位秒
   secret: v#z2QeXHYw#%C0VLnl
+  issuer: watt_jwt_issuer
   header: Authorization  
 
+# 跨域设置
+cross:
+  header: "*"
+  method: "Authorization"
 
 # http服务参数
 http:
   port: 8080
   readTimeout:  60
   writeTimeout:  60
+
 
 
 # 数据库服务

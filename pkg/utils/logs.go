@@ -52,3 +52,24 @@ func Strace(message interface{}) {
 
 	log.Printf("%v \n", message)
 }
+
+// 记录错误日志不终止程序
+func Error(message interface{}) {
+
+	log.SetPrefix(STRACE_PREFIX)
+
+	if Setting.Common.Debug {
+		log.Printf("%v \n", message)
+		return
+	}
+
+	logFile, err := os.OpenFile(Setting.Log.ErrorLog, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+
+	log.SetOutput(logFile)
+
+	if err != nil {
+		Exit(err)
+	}
+
+	log.Printf("%v \n", message)
+}

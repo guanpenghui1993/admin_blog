@@ -15,9 +15,15 @@ type configYaml struct {
 	}
 
 	Jwt struct {
-		Expired int    `yaml:"expired,flow"`
-		Secret  string `yaml:"secret,flow"`
-		Header  string `yaml:"header,flow"`
+		Expired time.Duration `yaml:"expired,flow"`
+		Secret  string        `yaml:"secret,flow"`
+		Issuer  string        `yaml:"issuer,flow"`
+		Header  string        `yaml:"header,flow"`
+	}
+
+	Cross struct {
+		Header string `yaml:"header,flow"`
+		Method string `yaml:"method,flow"`
 	}
 
 	Http struct {

@@ -28,6 +28,8 @@ func init() {
 	// 绑定后台路由
 	adminRoute := Route.Group("/admin")
 
+	user := &admin.UserController{}
+
 	// 后台登录
-	adminRoute.GET("/login", admin.Login)
+	adminRoute.GET("/login", user.Login)
 }
