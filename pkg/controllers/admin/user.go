@@ -2,6 +2,7 @@ package admin
 
 import (
 	"watt/pkg/services"
+	"watt/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,14 +20,14 @@ func (u *UserController) Login(c *gin.Context) {
 	token, err := services.UserService.Login("guanpenghui", "123456")
 
 	if err != nil {
-		u.Response(c, 200, "token error", nil)
+		u.Response(c, utils.ERROR, "令牌错误", nil)
 		return
 	}
 
 	if token == "" {
-		u.Response(c, 200, "token error", nil)
+		u.Response(c, utils.ERROR, "验证失败", nil)
 		return
 	}
 
-	u.Response(c, 200, "登录成功", map[string]string{"token": token})
+	u.Response(c, utils.SUCCESS, "登录成功", map[string]string{"token": token})
 }
