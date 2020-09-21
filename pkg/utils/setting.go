@@ -12,6 +12,7 @@ type configYaml struct {
 	Log struct {
 		ErrorLog  string `yaml:"error_log,flow"`
 		StraceLog string `yaml:"strace_log,flow"`
+		AccessLog string `yaml:"access_log,flow"`
 	}
 
 	Jwt struct {
@@ -45,11 +46,11 @@ type configYaml struct {
 			Prefix   string `yaml:"prefix,flow"`
 		}
 		Redis struct {
-			Host     string `yaml:"host,flow"`
-			Password string `yaml:"password,flow"`
-			Port     int    `yaml:"port,flow"`
-			Database int    `yaml:"database,flow"`
-			Timeout  int    `yaml:"timeout,flow"`
+			Host     string        `yaml:"host,flow"`
+			Password string        `yaml:"password,flow"`
+			Port     int           `yaml:"port,flow"`
+			Database int           `yaml:"database,flow"`
+			Timeout  time.Duration `yaml:"timeout,flow"`
 		}
 	}
 }

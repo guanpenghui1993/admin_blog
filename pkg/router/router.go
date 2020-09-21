@@ -2,6 +2,7 @@ package router
 
 import (
 	"watt/pkg/controllers/admin"
+	"watt/pkg/middleware"
 	"watt/pkg/utils"
 
 	"github.com/gin-gonic/gin"
@@ -28,8 +29,12 @@ func init() {
 	// 绑定后台路由
 	adminRoute := Route.Group("/admin")
 
-	user := &admin.UserController{}
+	// 验证token中间件
+	adminRoute.Use(middleware.CheckLogin())
+	{
+		user := new(admin.UserController)
 
-	// 后台登录
-	adminRoute.GET("/login", user.Login)
+		adminRoute.GET("/login", user.Login) // 后台登录
+	}
+
 }

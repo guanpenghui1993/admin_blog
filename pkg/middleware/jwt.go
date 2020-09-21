@@ -1,9 +1,40 @@
 package middleware
 
-import "github.com/gin-gonic/gin"
+import (
+	"watt/pkg/utils"
 
+	"github.com/gin-gonic/gin"
+)
+
+// 全局检测token有效性
 func CheckLogin() gin.HandlerFunc {
+
 	return func(c *gin.Context) {
+
+		code := utils.SUCCESS
+
+		token := c.GetHeader(utils.Setting.Jwt.Header)
+
+		if token == "" {
+			code = utils.HEADER_ERROR
+		} else {
+			_, err := utils.Parse(token)
+
+			if err != nil {
+				code = utils.ERROR
+			}
+		}
+
+		if code != utils.SUCCESS {
+			c.JSON(200, gin.H{
+				"code":    code,
+				"message": "令牌错误",
+				"data":    nil,
+			})
+
+			c.Abort()
+			return
+		}
 
 		c.Next()
 	}

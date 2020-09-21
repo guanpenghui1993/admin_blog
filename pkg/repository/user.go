@@ -1,9 +1,8 @@
 package repository
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"watt/pkg/models"
+	"watt/pkg/utils"
 )
 
 type UserRepository struct {
@@ -15,18 +14,22 @@ func newUserRepository() *UserRepository {
 	return new(UserRepository)
 }
 
-// 获取用户信息
-func (u *UserRepository) CheckUserByNamePwd(username, password string) models.User {
+// 验证用户名密码是否匹配
+func (u *UserRepository) UserInfoByName(username, password string) models.User {
 
 	var user models.User
 
-	h := md5.New()
+	models.Link.Where("username = ? AND password status = 1", username, utils.Md5(password)).First(&user)
 
-	h.Write([]byte(password))
+	return user
+}
 
-	cipherStr := h.Sum(nil)
+// 通过用户ID获取用户信息
+func (u *UserRepository) UserInfoById(userid int) models.User {
 
-	models.Link.Where("username = ? AND password = ? AND status = 1", username, hex.EncodeToString(cipherStr)).First(&user)
+	var user models.User
+
+	models.Link.Where("id = ? AND status = 1", userid).First(&user)
 
 	return user
 }
