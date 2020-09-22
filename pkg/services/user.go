@@ -1,9 +1,10 @@
 package services
 
 import (
-	"watt/pkg/dto"
+	"watt/pkg/models"
 	"watt/pkg/repository"
 	"watt/pkg/utils"
+	"watt/pkg/validation"
 )
 
 type userService struct {
@@ -16,7 +17,7 @@ func newUserService() *userService {
 }
 
 // 登录
-func (u *userService) Login(dto dto.UserLoginDto) (string, error) {
+func (u *userService) Login(dto *validation.UserLogin) (string, error) {
 
 	user := repository.UserRep.UserInfoByName(dto.Username, dto.Password)
 
@@ -26,4 +27,10 @@ func (u *userService) Login(dto dto.UserLoginDto) (string, error) {
 	}
 
 	return "", nil
+}
+
+// 获取用户信息
+func (u *userService) Info(uid int) models.User {
+
+	return repository.UserRep.UserInfoById(uid)
 }

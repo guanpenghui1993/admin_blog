@@ -8,12 +8,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var (
-	Setting configYaml
-	file    string
-)
-
+// 初始化配置文件
 func init() {
+
+	var file string
 
 	flag.StringVar(&file, "f", "config/application.yaml", "应用系统配置文件")
 

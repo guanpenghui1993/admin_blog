@@ -1,10 +1,31 @@
 package utils
 
-import (
-	"time"
+import "time"
+
+// 全局配置
+var Setting ConfigYaml
+
+// 全局常量
+const (
+	SUCCESS        = 200
+	ERROR          = 201
+	HEADER_ERROR   = 202
+	PARAM_ERROR    = 204
+	FORIDDEN_ERROR = 403
+	SERVER_ERROR   = 500
+	ERROR_PREFIX   = "[程序错误] - "
+	STRACE_PREFIX  = "[程序日志] - "
 )
 
-type configYaml struct {
+// 全局响应返回格式
+type Response struct {
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+// 全局配置结构
+type ConfigYaml struct {
 	Common struct {
 		Debug bool `yaml:"debug,flow"`
 	}

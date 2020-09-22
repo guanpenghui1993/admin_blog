@@ -26,12 +26,7 @@ func CheckLogin() gin.HandlerFunc {
 		}
 
 		if code != utils.SUCCESS {
-			c.JSON(200, gin.H{
-				"code":    code,
-				"message": "令牌错误",
-				"data":    nil,
-			})
-
+			c.JSON(200, utils.Response{code, "令牌错误", nil})
 			c.Abort()
 			return
 		}

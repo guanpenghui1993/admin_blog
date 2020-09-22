@@ -3,6 +3,8 @@ package repository
 import (
 	"watt/pkg/models"
 	"watt/pkg/utils"
+
+	"github.com/jinzhu/gorm"
 )
 
 type UserRepository struct {
@@ -19,7 +21,11 @@ func (u *UserRepository) UserInfoByName(username, password string) models.User {
 
 	var user models.User
 
-	models.Link.Where("username = ? AND password status = 1", username, utils.Md5(password)).First(&user)
+	err := models.Link.Select("id").Where("username = ? AND password = ? AND status = 1", username, utils.Md5(password)).First(&user).Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		utils.Error(err)
+	}
 
 	return user
 }
@@ -29,7 +35,11 @@ func (u *UserRepository) UserInfoById(userid int) models.User {
 
 	var user models.User
 
-	models.Link.Where("id = ? AND status = 1", userid).First(&user)
+	err := models.Link.Select("id,nickname,user_pic,roleid").Where("id = ? AND status = 1", userid).First(&user).Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		utils.Error(err)
+	}
 
 	return user
 }

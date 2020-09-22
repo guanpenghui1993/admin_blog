@@ -39,4 +39,8 @@ func init() {
 	Link.SingularTable(true)
 
 	Link.LogMode(utils.Setting.Common.Debug)
+
+	Link.DB().SetMaxIdleConns(10)
+
+	Link.DB().SetMaxOpenConns(100)
 }
