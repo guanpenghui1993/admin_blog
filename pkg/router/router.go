@@ -29,14 +29,15 @@ func init() {
 	// 绑定后台路由
 	adminRoute := Route.Group("/admin")
 
+	// 用户类
 	user := new(admin.UserController)
 
-	adminRoute.GET("/login", user.Login) // 后台登录
+	// 后台登录
+	adminRoute.GET("/login", user.Login)
 
 	// 验证token中间件
 	adminRoute.Use(middleware.CheckLogin())
 	{
 		adminRoute.GET("/info", user.Info)
 	}
-
 }
