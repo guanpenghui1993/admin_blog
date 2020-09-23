@@ -21,7 +21,7 @@ func CheckLogin() gin.HandlerFunc {
 		if token == "" {
 
 			code = utils.HEADER_ERROR
-			msg = "header信息有误"
+			msg = "缺少token信息"
 
 		} else {
 
