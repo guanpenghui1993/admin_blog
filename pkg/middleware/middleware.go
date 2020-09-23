@@ -34,3 +34,20 @@ func CheckLogin() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+// 全局异常信息
+func Recovery() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		defer func() {
+			if r := recover(); r != nil {
+				utils.Error(r)
+				c.JSON(200, utils.Response{utils.SERVER_ERROR, "服务器异常，请稍后再试", nil})
+				c.Abort()
+				return
+			}
+		}()
+		c.Next()
+	}
+}
+
+// 日志 chan

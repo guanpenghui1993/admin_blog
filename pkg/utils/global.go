@@ -33,7 +33,6 @@ type ConfigYaml struct {
 	Log struct {
 		ErrorLog  string `yaml:"error_log,flow"`
 		StraceLog string `yaml:"strace_log,flow"`
-		AccessLog string `yaml:"access_log,flow"`
 	}
 
 	Jwt struct {

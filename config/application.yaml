@@ -6,7 +6,6 @@ common:
 log:
   error_log: logs/go_error.log
   strace_log: logs/go_strace.log
-  access_log: logs/go_access.log
 
 
 # jwt配置

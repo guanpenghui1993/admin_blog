@@ -35,7 +35,21 @@ func (u *UserRepository) UserInfoById(userid int) models.User {
 
 	var user models.User
 
-	err := models.Link.Select("id,nickname,user_pic,roleid").Where("id = ? AND status = 1", userid).First(&user).Error
+	err := models.Link.Where("id = ? AND status = 1", userid).First(&user).Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		utils.Error(err)
+	}
+
+	return user
+}
+
+// 获取用列表
+func (u *UserRepository) UserList(page, size int) []models.User {
+
+	var user []models.User
+
+	err := models.Link.Where("status = 1").Order("created_at DESC").Offset((page - 1) * size).Limit(size).Find(&user).Error
 
 	if err != nil && err != gorm.ErrRecordNotFound {
 		utils.Error(err)

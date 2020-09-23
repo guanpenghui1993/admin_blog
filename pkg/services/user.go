@@ -1,6 +1,7 @@
 package services
 
 import (
+	"errors"
 	"watt/pkg/models"
 	"watt/pkg/repository"
 	"watt/pkg/utils"
@@ -26,11 +27,17 @@ func (u *userService) Login(dto *validation.UserLogin) (string, error) {
 		return utils.Token(user.ID)
 	}
 
-	return "", nil
+	return "", errors.New("用户名密码不匹配")
 }
 
 // 获取用户信息
 func (u *userService) Info(uid int) models.User {
 
 	return repository.UserRep.UserInfoById(uid)
+}
+
+// 获取用户列表
+func (u *userService) UserList(param *validation.BaseValid) []models.User {
+
+	return repository.UserRep.UserList(param.Page, param.Size)
 }

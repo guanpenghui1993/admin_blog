@@ -21,7 +21,10 @@ func init() {
 	}
 
 	// 初始化router引擎
-	Route = gin.Default()
+	Route = gin.New()
+
+	// 全局异常
+	Route.Use(middleware.Recovery())
 
 	// 运行模式
 	gin.SetMode(mode)
@@ -35,9 +38,10 @@ func init() {
 	// 后台登录
 	adminRoute.GET("/login", user.Login)
 
-	// 验证token中间件
+	// 后台接口
 	adminRoute.Use(middleware.CheckLogin())
 	{
-		adminRoute.GET("/info", user.Info)
+		adminRoute.GET("/userinfo", user.Info)
+		adminRoute.GET("/userlist", user.UserList)
 	}
 }

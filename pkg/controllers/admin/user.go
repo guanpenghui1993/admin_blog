@@ -28,14 +28,7 @@ func (u *UserController) Login(c *gin.Context) {
 
 	if err != nil {
 
-		u.json(c, utils.ERROR, "令牌错误", nil)
-
-		return
-	}
-
-	if token == "" {
-
-		u.json(c, utils.ERROR, "用户名密码不匹配", nil)
+		u.json(c, utils.ERROR, err.Error(), nil)
 
 		return
 	}
@@ -49,4 +42,21 @@ func (u *UserController) Info(c *gin.Context) {
 	list := services.UserService.Info(u.getuid(c))
 
 	u.json(c, utils.SUCCESS, "获取成功", list)
+}
+
+// 用户列表
+func (u *UserController) UserList(c *gin.Context) {
+
+	var param validation.BaseValid
+
+	if err := u.valid(c, &param); err != nil {
+
+		u.json(c, utils.ERROR, err.Error(), nil)
+
+		return
+	}
+
+	data := services.UserService.UserList(&param)
+
+	u.json(c, utils.SUCCESS, "获取成功", data)
 }
