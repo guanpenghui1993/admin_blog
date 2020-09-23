@@ -36,14 +36,14 @@ func init() {
 	user := new(admin.UserController)
 
 	// 后台登录
-	adminRoute.GET("/login", user.Login)
+	adminRoute.POST("/login", user.Login)
 
 	// 后台接口
 	adminRoute.Use(middleware.CheckLogin())
 	{
-		adminRoute.GET("/userinfo", user.Info)
-		adminRoute.GET("/userlist", user.UserList)
-		adminRoute.GET("/userdel", user.UserDel)
-		adminRoute.GET("/useradd", user.UserAdd)
+		adminRoute.POST("/userinfo", user.Info)
+		adminRoute.POST("/userlist", user.UserList)
+		adminRoute.POST("/userdel", user.UserDel)
+		adminRoute.POST("/useradd", user.UserAdd)
 	}
 }
