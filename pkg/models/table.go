@@ -14,23 +14,23 @@ type User struct {
 // 角色表
 type Role struct {
 	Base
-	Rolename string `gorm:"type:varchar(45);not null;unique;"`
-	Roledesc string `gorm:"type:varchar(65);not null;"`
-	Status   int8   `gorm:"type:tinyint(1);not null;index:idx_status;default:1;comment:'1 正常 -1 删除'"`
+	Rolename string `json:"role_name" gorm:"type:varchar(45);not null;unique;"`
+	Roledesc string `json:"role_desc" gorm:"type:varchar(65);not null;"`
+	Status   int8   `json:"role_status" gorm:"type:tinyint(1);not null;index:idx_status;default:1;comment:'1 正常 -1 删除'"`
 }
 
 // 菜单表
 type Menu struct {
 	Base
-	Pid      uint   `gorm:"type:int(10);not null;default:0"`
-	Menuname string `gorm:"type:varchar(65);not null;unique;"`
-	Router   string `gorm:"type:varchar(125);not null;unique;"`
-	Icon     string `gorm:"type:varchar(25);not null;"`
-	Status   int8   `gorm:"type:tinyint(1);not null;index:idx_status;default:1;comment:'1 正常 -1 删除'"`
+	Pid      uint   `json:"pid" gorm:"type:int(10);not null;default:0"`
+	Menuname string `json:"menu_name" gorm:"type:varchar(65);not null;unique;"`
+	Router   string `json:"router" gorm:"type:varchar(125);not null;unique;"`
+	Icon     string `json:"icon" gorm:"type:varchar(25);not null;"`
+	Status   int8   `json:"status" gorm:"type:tinyint(1);not null;index:idx_status;default:1;comment:'1 正常 -1 删除'"`
 }
 
 // 权限表
 type Access struct {
-	Roleid uint `gorm:"type:int(10);not null"`
-	Menuid uint `gorm:"type:int(10);not null"`
+	Roleid uint `json:"role_id" gorm:"type:int(10);not null"`
+	Menuid uint `json:"menu_id" gorm:"type:int(10);not null"`
 }

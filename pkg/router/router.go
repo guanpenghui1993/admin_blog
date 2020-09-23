@@ -43,5 +43,7 @@ func init() {
 	{
 		adminRoute.GET("/userinfo", user.Info)
 		adminRoute.GET("/userlist", user.UserList)
+		adminRoute.GET("/userdel", user.UserDel)
+		adminRoute.GET("/useradd", user.UserAdd)
 	}
 }

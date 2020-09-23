@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"watt/pkg/services"
 	"watt/pkg/utils"
 
 	"github.com/gin-gonic/gin"
@@ -13,20 +14,32 @@ func CheckLogin() gin.HandlerFunc {
 
 		code := utils.SUCCESS
 
+		msg := ""
+
 		token := c.GetHeader(utils.Setting.Jwt.Header)
 
 		if token == "" {
+
 			code = utils.HEADER_ERROR
+			msg = "header信息有误"
+
 		} else {
-			_, err := utils.Parse(token)
+
+			uid, err := utils.Parse(token)
 
 			if err != nil {
 				code = utils.ERROR
+				msg = "token error"
+			} else {
+				if list := services.UserService.Info(uid); list.ID <= 0 {
+					msg = "用户不存在或已禁用"
+					code = utils.ERROR
+				}
 			}
 		}
 
 		if code != utils.SUCCESS {
-			c.JSON(200, utils.Response{code, "令牌错误", nil})
+			c.JSON(200, utils.Response{code, msg, nil})
 			c.Abort()
 			return
 		}
@@ -51,3 +64,5 @@ func Recovery() gin.HandlerFunc {
 }
 
 // 日志 chan
+
+// 当前用户操作权限（权限菜单路由权限）

@@ -1,8 +1,10 @@
 package repository
 
 import (
+	"errors"
 	"watt/pkg/models"
 	"watt/pkg/utils"
+	"watt/pkg/validation"
 
 	"github.com/jinzhu/gorm"
 )
@@ -56,4 +58,55 @@ func (u *UserRepository) UserList(page, size int) []models.User {
 	}
 
 	return user
+}
+
+// 删除用户信息
+func (u *UserRepository) DeleteUser(uid int) bool {
+
+	var user models.User
+
+	err := models.Link.Where("status = 1 AND id = ?", uid).First(&user).Error
+
+	if err != nil {
+		return false
+	}
+
+	user.Status = -1
+
+	err = models.Link.Save(&user).Error
+
+	if err != nil {
+		return false
+	}
+
+	return true
+}
+
+// 添加用户
+func (u *UserRepository) InsertUser(param *validation.InsertUserData) error {
+
+	var user models.User
+
+	err := models.Link.Select("id").Where("username = ? AND status > 0", param.Username).First(&user).Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return errors.New("添加失败")
+	}
+
+	if user.ID > 0 {
+		return errors.New("用户名重复")
+	}
+
+	user.Roleid = param.Roleid
+	user.Username = param.Username
+	user.Password = param.Password
+	user.UserPic = param.UserPic
+	user.Nickname = param.Nickname
+
+	if err = models.Link.Create(&user).Error; err != nil {
+		utils.Error(err)
+		return errors.New("添加失败!")
+	}
+
+	return nil
 }

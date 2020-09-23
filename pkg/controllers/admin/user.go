@@ -60,3 +60,43 @@ func (u *UserController) UserList(c *gin.Context) {
 
 	u.json(c, utils.SUCCESS, "获取成功", data)
 }
+
+// 删除用户
+func (u *UserController) UserDel(c *gin.Context) {
+
+	var param validation.BaseID
+
+	if err := u.valid(c, &param); err != nil {
+
+		u.json(c, utils.ERROR, err.Error(), nil)
+
+		return
+	}
+
+	if services.UserService.Delete(&param) {
+		u.json(c, utils.SUCCESS, "删除成功", nil)
+		return
+	}
+
+	u.json(c, utils.ERROR, "删除失败", nil)
+}
+
+// 添加用户
+func (u *UserController) UserAdd(c *gin.Context) {
+
+	var insertData validation.InsertUserData
+
+	if err := u.valid(c, &insertData); err != nil {
+
+		u.json(c, utils.ERROR, err.Error(), nil)
+
+		return
+	}
+
+	if err := services.UserService.Insert(&insertData); err != nil {
+		u.json(c, utils.ERROR, err.Error(), nil)
+		return
+	}
+
+	u.json(c, utils.SUCCESS, "添加成功", nil)
+}
