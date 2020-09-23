@@ -14,23 +14,24 @@ type User struct {
 // 角色表
 type Role struct {
 	Base
-	Rolename string `json:"role_name" gorm:"type:varchar(45);not null;unique;"`
-	Roledesc string `json:"role_desc" gorm:"type:varchar(65);not null;"`
+	Rolename string `json:"role_name" gorm:"type:varchar(45);not null;unique;comment:'角色名称'"`
+	Roledesc string `json:"role_desc" gorm:"type:varchar(65);not null;comment:'角色描述'"`
 	Status   int8   `json:"role_status" gorm:"type:tinyint(1);not null;index:idx_status;default:1;comment:'1 正常 -1 删除'"`
 }
 
 // 菜单表
 type Menu struct {
 	Base
-	Pid      uint   `json:"pid" gorm:"type:int(10);not null;default:0"`
-	Menuname string `json:"menu_name" gorm:"type:varchar(65);not null;unique;"`
-	Router   string `json:"router" gorm:"type:varchar(125);not null;unique;"`
-	Icon     string `json:"icon" gorm:"type:varchar(25);not null;"`
+	Pid      uint   `json:"pid" gorm:"type:int(10);not null;default:0;comment:'父级id 默认0为顶级分类'"`
+	Menuname string `json:"menu_name" gorm:"type:varchar(65);not null;unique;comment:'菜单名称'"`
+	Router   string `json:"router" gorm:"type:varchar(125);not null;unique;comment:'菜单路由地址使用 @ 符号分割控制器跟action'"`
+	Icon     string `json:"icon" gorm:"type:varchar(25);not null;comment:'菜单ICON图标'"`
+	Sort     int8   `json:"sort" gorm:"type:tinyint(3);not null;index:sort;default:0;comment:'排序字段'"`
 	Status   int8   `json:"status" gorm:"type:tinyint(1);not null;index:idx_status;default:1;comment:'1 正常 -1 删除'"`
 }
 
 // 权限表
 type Access struct {
-	Roleid uint `json:"role_id" gorm:"type:int(10);not null"`
-	Menuid uint `json:"menu_id" gorm:"type:int(10);not null"`
+	Roleid uint `json:"role_id" gorm:"type:int(10);not null;comment:'角色ID'"`
+	Menuid uint `json:"menu_id" gorm:"type:int(10);not null;comment:'菜单ID'"`
 }
