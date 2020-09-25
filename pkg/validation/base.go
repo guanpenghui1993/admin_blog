@@ -10,6 +10,6 @@ type BaseID struct {
 }
 
 type BaseIdStatus struct {
-	ID     int `form:"id" v:"required|min:1 #id不能为空|id错误"`
+	ID     int `form:"id" v:"required|integer #id不能为空|id错误"`
 	Status int `form:"status" v:"required|in:0,1,-1 #状态不能为空|状态错误"`
 }

@@ -45,5 +45,6 @@ func init() {
 		adminRoute.POST("/userlist", user.UserList)
 		adminRoute.POST("/userdel", user.UserDel)
 		adminRoute.POST("/useradd", user.UserAdd)
+		adminRoute.POST("/userupstatus", user.UserUpdate)
 	}
 }

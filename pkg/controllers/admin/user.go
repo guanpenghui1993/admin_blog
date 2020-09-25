@@ -100,3 +100,23 @@ func (u *UserController) UserAdd(c *gin.Context) {
 
 	u.json(c, utils.SUCCESS, "添加成功", nil)
 }
+
+// 更新用户状态
+func (u *UserController) UserUpdate(c *gin.Context) {
+
+	var updateData validation.BaseIdStatus
+
+	if err := u.valid(c, &updateData); err != nil {
+
+		u.json(c, utils.ERROR, err.Error(), nil)
+
+		return
+	}
+
+	if err := services.UserService.Update(&updateData); err != nil {
+		u.json(c, utils.ERROR, err.Error(), nil)
+		return
+	}
+
+	u.json(c, utils.SUCCESS, "更新成功", nil)
+}

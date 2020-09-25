@@ -110,3 +110,18 @@ func (u *UserRepository) InsertUser(param *validation.InsertUserData) error {
 
 	return nil
 }
+
+// 更新用户状态
+func (u *UserRepository) UpdateUser(id, status int) error {
+
+	var user models.User
+
+	err := models.Link.Model(&user).Where("id = ?", id).Update("status", status).Error
+
+	if err != nil {
+		utils.Error(err)
+		return errors.New("更新失败!")
+	}
+
+	return nil
+}

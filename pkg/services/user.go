@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"html"
+	"strings"
 	"watt/pkg/models"
 	"watt/pkg/repository"
 	"watt/pkg/utils"
@@ -53,13 +54,17 @@ func (u *userService) Delete(uid *validation.BaseID) bool {
 func (u *userService) Insert(param *validation.InsertUserData) error {
 
 	// html 标签转义
-	param.Username = html.EscapeString(param.Username)
+	param.Username = html.EscapeString(strings.TrimSpace(param.Username))
 
-	param.Nickname = html.EscapeString(param.Nickname)
+	param.Nickname = html.EscapeString(strings.TrimSpace(param.Nickname))
 
-	param.Password = utils.Md5(param.Password)
+	param.Password = utils.Md5(strings.TrimSpace(param.Password))
 
 	return repository.UserRep.InsertUser(param)
 }
 
 // 修改用户状态
+func (u *userService) Update(param *validation.BaseIdStatus) error {
+
+	return repository.UserRep.UpdateUser(param.ID, param.Status)
+}
