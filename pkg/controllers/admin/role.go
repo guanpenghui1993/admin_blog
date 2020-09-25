@@ -1,9 +1,10 @@
 package admin
 
+import "github.com/gin-gonic/gin"
+
 type RoleController struct {
 	BaseController
 }
-
 
 // 获取角色列表
 func (r *RoleController) List(c *gin.Context) {

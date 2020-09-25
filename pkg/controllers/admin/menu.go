@@ -15,7 +15,18 @@ type MenuController struct {
 // 获取菜单列表
 func (m *MenuController) List(c *gin.Context) {
 
-	// var param validation.BaseValid
+	var param validation.BaseValid
+
+	if err := m.valid(c, &param); err != nil {
+
+		m.json(c, utils.ERROR, err.Error(), nil)
+
+		return
+	}
+
+	data := services.MenuService.MenuList(&param)
+
+	m.json(c, utils.SUCCESS, "获取成功", data)
 
 }
 
@@ -24,24 +35,39 @@ func (m *MenuController) Create(c *gin.Context) {
 
 	var insertData validation.InsertMenuData
 
-	if err := u.valid(c, &insertData); err != nil {
+	if err := m.valid(c, &insertData); err != nil {
 
-		u.json(c, utils.ERROR, err.Error(), nil)
+		m.json(c, utils.ERROR, err.Error(), nil)
 
 		return
 	}
 
 	if err := services.MenuService.Insert(&insertData); err != nil {
-		u.json(c, utils.ERROR, err.Error(), nil)
+		m.json(c, utils.ERROR, err.Error(), nil)
 		return
 	}
 
-	u.json(c, utils.SUCCESS, "添加成功", nil)
+	m.json(c, utils.SUCCESS, "添加成功", nil)
 }
 
 // 删除菜单
 func (m *MenuController) Delete(c *gin.Context) {
 
+	var param validation.BaseID
+
+	if err := m.valid(c, &param); err != nil {
+
+		m.json(c, utils.ERROR, err.Error(), nil)
+
+		return
+	}
+
+	if services.MenuService.MenuDel(&param) {
+		m.json(c, utils.SUCCESS, "删除成功", nil)
+		return
+	}
+
+	m.json(c, utils.ERROR, "删除失败", nil)
 }
 
 // 编辑菜单

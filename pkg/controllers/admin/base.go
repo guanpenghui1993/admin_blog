@@ -19,10 +19,14 @@ func (*BaseController) json(c *gin.Context, code int, message string, data inter
 // 统一校验参数
 func (b *BaseController) valid(c *gin.Context, obj interface{}) error {
 
-	c.ShouldBind(obj)
+	err := c.ShouldBind(obj)
 
-	if err := gvalid.CheckStruct(obj, nil); err != nil {
-		return errors.New(err.FirstString())
+	if err != nil {
+		return errors.New(err.Error())
+	}
+
+	if errs := gvalid.CheckStruct(obj, nil); errs != nil {
+		return errors.New(errs.FirstString())
 	}
 
 	return nil
