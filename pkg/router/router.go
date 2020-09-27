@@ -24,7 +24,7 @@ func init() {
 	Route = gin.New()
 
 	// 全局异常
-	Route.Use(middleware.Recovery())
+	Route.Use(middleware.Recovery(), gin.Logger())
 
 	// 运行模式
 	gin.SetMode(mode)
@@ -41,7 +41,7 @@ func init() {
 	// 后台登录
 	adminRoute.POST("/login", user.Login)
 
-	// adminRoute.Use(middleware.CheckLogin())
+	adminRoute.Use(middleware.CheckLogin())
 	{
 		// 后台用户接口
 		adminRoute.GET("/user/info", user.Info)          // 用户信息
