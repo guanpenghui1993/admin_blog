@@ -40,12 +40,12 @@ func (m *menuService) Insert(param *validation.InsertMenuData) error {
 }
 
 // 菜单列表
-func (m *menuService) MenuList(param *validation.BaseValid) []models.Menu {
+func (m *menuService) MenuList() interface{} {
 
-	data := repository.MenuRep.List(param.Page, param.Size)
+	data := repository.MenuRep.List()
 
 	if len(data) > 0 { // 递归数组
-		return m.menuTree(&data)
+		return m.menuTree(&data, 0)
 	}
 
 	return data
@@ -58,9 +58,26 @@ func (m *menuService) MenuDel(param *validation.BaseID) bool {
 }
 
 // 递归处理菜单
-func (m *menuService) menuTree(array *[]models.Menu) []models.Menu {
+func (m *menuService) menuTree(array *[]models.Menu, pid uint) []validation.MenuList {
 
-	data := *array
+	var result []validation.MenuList
 
-	return data
+	for _, val := range *array {
+
+		if val.Pid == pid {
+
+			tmp := validation.MenuList{
+				val.Menuname,
+				val.Icon,
+				val.Router,
+				val.Pid,
+				val.ID,
+				m.menuTree(array, val.ID),
+			}
+
+			result = append(result, tmp)
+		}
+	}
+
+	return result
 }

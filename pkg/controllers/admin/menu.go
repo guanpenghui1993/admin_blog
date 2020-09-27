@@ -15,19 +15,9 @@ type MenuController struct {
 // 获取菜单列表
 func (m *MenuController) List(c *gin.Context) {
 
-	var param validation.BaseValid
-
-	if err := m.valid(c, &param); err != nil {
-
-		m.json(c, utils.ERROR, err.Error(), nil)
-
-		return
-	}
-
-	data := services.MenuService.MenuList(&param)
+	data := services.MenuService.MenuList()
 
 	m.json(c, utils.SUCCESS, "获取成功", data)
-
 }
 
 // 添加菜单

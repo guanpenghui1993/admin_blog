@@ -33,11 +33,11 @@ func (m *MenuRepository) Info(id uint) models.Menu {
 }
 
 // 菜单列表
-func (m *MenuRepository) List(page, size int) []models.Menu {
+func (m *MenuRepository) List() []models.Menu {
 
 	var menu []models.Menu
 
-	err := models.Link.Where("status = 1").Order("sort DESC").Offset((page - 1) * size).Limit(size).Find(&menu).Error
+	err := models.Link.Where("status = 1").Order("sort DESC").Find(&menu).Error
 
 	if err != nil && err != gorm.ErrRecordNotFound {
 		utils.Error(err)

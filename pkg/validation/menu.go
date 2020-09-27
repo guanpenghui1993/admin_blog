@@ -7,3 +7,13 @@ type InsertMenuData struct {
 	Icon     string `form:"icon" v:"required #菜单图标不能为空"`
 	Sort     int    `form:"sort" v:"between:0,255 #排序值0-255"`
 }
+
+// 返回菜单结构
+type MenuList struct {
+	Name   string `json:"name"`
+	Icon   string `json:"icon"`
+	Router string `json:"router"`
+	Pid    uint   `json:"pid"`
+	Id     uint   `json:"id"`
+	Child  []MenuList
+}
