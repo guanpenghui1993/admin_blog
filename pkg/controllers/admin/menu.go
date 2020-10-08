@@ -63,4 +63,14 @@ func (m *MenuController) Delete(c *gin.Context) {
 // 编辑菜单
 func (m *MenuController) Edite(c *gin.Context) {
 
+	var updateData validation.InsertMenuData
+
+	if err := m.valid(c, &updateData); err != nil {
+
+		m.json(c, utils.ERROR, err.Error(), nil)
+
+		return
+	}
+
+	// 编辑菜单信息
 }

@@ -75,6 +75,11 @@ func (m *MenuRepository) InsertMenu(param *validation.InsertMenuData) error {
 	return nil
 }
 
+// 更新菜单
+func (m *MenuRepository) UpdateMenu(param *validation.InsertMenuData) error {
+	
+}
+
 // 删除菜单
 func (m *MenuRepository) Delete(id int) bool {
 

@@ -22,7 +22,7 @@ cross:
 
 # http服务参数
 http:
-  port: 80
+  port: 8080
   readTimeout:  60
   writeTimeout:  60
 

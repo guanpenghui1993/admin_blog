@@ -81,3 +81,24 @@ func (m *menuService) menuTree(array *[]models.Menu, pid uint) []validation.Menu
 
 	return result
 }
+
+// 编辑菜单
+func (m *menuService) MenuEdite(param *validation.InsertMenuData) error {
+
+	if param.Pid > 0 {
+
+		menu := repository.MenuRep.Info(param.Pid)
+
+		if menu.ID <= 0 {
+			return errors.New("菜单有误")
+		}
+	}
+
+	param.Menuname = html.EscapeString(strings.TrimSpace(param.Menuname))
+
+	param.Router = html.EscapeString(strings.TrimSpace(param.Router))
+
+	param.Icon = html.EscapeString(strings.TrimSpace(param.Icon))
+
+	return repository.MenuRep.UpdateMenu(param)
+}

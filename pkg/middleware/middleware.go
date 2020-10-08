@@ -63,6 +63,4 @@ func Recovery() gin.HandlerFunc {
 	}
 }
 
-// 日志 chan
-
 // 当前用户操作权限（权限菜单路由权限）
