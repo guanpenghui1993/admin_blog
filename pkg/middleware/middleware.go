@@ -64,3 +64,9 @@ func Recovery() gin.HandlerFunc {
 }
 
 // 当前用户操作权限（权限菜单路由权限）
+func Access() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+
+	}
+}
