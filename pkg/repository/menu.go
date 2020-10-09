@@ -92,7 +92,7 @@ func (m *MenuRepository) UpdateMenu(id int, param *validation.InsertMenuData) er
 	menu.Router = param.Router
 	menu.Sort = param.Sort
 
-	err = models.Link.Save(&menu).Error
+	err = models.Link.Model(&menu).Updates(map[string]interface{}{"pid": param.Pid, "menuname": param.Menuname, "icon": param.Icon, "router": param.Router, "sort": param.Sort}).Error
 
 	if err != nil {
 		return errors.New("更新失败")

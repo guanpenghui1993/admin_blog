@@ -41,7 +41,7 @@ func init() {
 	// 后台登录
 	adminRoute.POST("/login", user.Login)
 
-	adminRoute.Use(middleware.CheckLogin())
+	// adminRoute.Use(middleware.CheckLogin())
 	{
 		// 后台用户接口
 		adminRoute.GET("/user/info", user.Info)          // 用户信息

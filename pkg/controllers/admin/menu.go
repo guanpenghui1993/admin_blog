@@ -73,7 +73,7 @@ func (m *MenuController) Edite(c *gin.Context) {
 		return
 	}
 
-	id := strconv.Atoi(c.PostForm("id"))
+	id, _ := strconv.Atoi(c.PostForm("id"))
 
 	if id <= 0 {
 		m.json(c, utils.ERROR, "id 有误", nil)
@@ -81,7 +81,7 @@ func (m *MenuController) Edite(c *gin.Context) {
 	}
 
 	// 编辑菜单信息
-	if err := services.MenuService.MenuEdite(id, updateData); err != nil {
+	if err := services.MenuService.MenuEdite(id, &updateData); err != nil {
 		m.json(c, utils.ERROR, err.Error(), nil)
 		return
 	}
