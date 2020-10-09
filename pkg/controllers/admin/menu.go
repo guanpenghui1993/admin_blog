@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"strconv"
 	"watt/pkg/services"
 	"watt/pkg/utils"
 	"watt/pkg/validation"
@@ -52,12 +53,12 @@ func (m *MenuController) Delete(c *gin.Context) {
 		return
 	}
 
-	if services.MenuService.MenuDel(&param) {
-		m.json(c, utils.SUCCESS, "删除成功", nil)
+	if err := services.MenuService.MenuDel(&param); err != nil {
+		m.json(c, utils.ERROR, err.Error(), nil)
 		return
 	}
 
-	m.json(c, utils.ERROR, "删除失败", nil)
+	m.json(c, utils.SUCCESS, "删除成功", nil)
 }
 
 // 编辑菜单
@@ -72,5 +73,18 @@ func (m *MenuController) Edite(c *gin.Context) {
 		return
 	}
 
+	id := strconv.Atoi(c.PostForm("id"))
+
+	if id <= 0 {
+		m.json(c, utils.ERROR, "id 有误", nil)
+		return
+	}
+
 	// 编辑菜单信息
+	if err := services.MenuService.MenuEdite(id, updateData); err != nil {
+		m.json(c, utils.ERROR, err.Error(), nil)
+		return
+	}
+
+	m.json(c, utils.SUCCESS, "更新成功", nil)
 }

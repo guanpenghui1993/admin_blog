@@ -76,19 +76,46 @@ func (m *MenuRepository) InsertMenu(param *validation.InsertMenuData) error {
 }
 
 // 更新菜单
-func (m *MenuRepository) UpdateMenu(param *validation.InsertMenuData) error {
-	
+func (m *MenuRepository) UpdateMenu(id int, param *validation.InsertMenuData) error {
+
+	var menu models.Menu
+
+	err := models.Link.Where("id = ?", id).First(&menu).Error
+
+	if err != nil {
+		return errors.New("菜单有误")
+	}
+
+	menu.Pid = param.Pid
+	menu.Menuname = param.Menuname
+	menu.Icon = param.Icon
+	menu.Router = param.Router
+	menu.Sort = param.Sort
+
+	err = models.Link.Save(&menu).Error
+
+	if err != nil {
+		return errors.New("更新失败")
+	}
+
+	return nil
 }
 
 // 删除菜单
-func (m *MenuRepository) Delete(id int) bool {
+func (m *MenuRepository) Delete(id int) error {
 
-	var menu models.Menu
+	var menu, pmenu models.Menu
+
+	models.Link.Where("status = 1 AND pid = ?", id).First(&pmenu)
+
+	if pmenu.ID > 0 {
+		return errors.New("存在子级菜单")
+	}
 
 	err := models.Link.Where("status = 1 AND id = ?", id).First(&menu).Error
 
 	if err != nil {
-		return false
+		return errors.New("菜单有误")
 	}
 
 	menu.Status = -1
@@ -96,8 +123,8 @@ func (m *MenuRepository) Delete(id int) bool {
 	err = models.Link.Save(&menu).Error
 
 	if err != nil {
-		return false
+		return errors.New("更新失败")
 	}
 
-	return true
+	return nil
 }

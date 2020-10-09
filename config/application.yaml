@@ -31,11 +31,11 @@ database:
   
   mysql:
     type: mysql 
-    #host: host.docker.internal
-    host: localhost
+    host: host.docker.internal
+    #host: localhost
     user: root
-    #password: 123456
-    password: root
+    password: 123456
+    #password: root
     port: 3306
     dbname: watt
     charset: utf8

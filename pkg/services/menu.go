@@ -52,7 +52,7 @@ func (m *menuService) MenuList() interface{} {
 }
 
 // 删除菜单
-func (m *menuService) MenuDel(param *validation.BaseID) bool {
+func (m *menuService) MenuDel(param *validation.BaseID) error {
 
 	return repository.MenuRep.Delete(param.ID)
 }
@@ -83,7 +83,7 @@ func (m *menuService) menuTree(array *[]models.Menu, pid uint) []validation.Menu
 }
 
 // 编辑菜单
-func (m *menuService) MenuEdite(param *validation.InsertMenuData) error {
+func (m *menuService) MenuEdite(id int, param *validation.InsertMenuData) error {
 
 	if param.Pid > 0 {
 
@@ -100,5 +100,5 @@ func (m *menuService) MenuEdite(param *validation.InsertMenuData) error {
 
 	param.Icon = html.EscapeString(strings.TrimSpace(param.Icon))
 
-	return repository.MenuRep.UpdateMenu(param)
+	return repository.MenuRep.UpdateMenu(id, param)
 }
