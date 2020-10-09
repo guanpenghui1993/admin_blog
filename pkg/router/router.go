@@ -61,9 +61,5 @@ func init() {
 		adminRoute.POST("/role/create", role.Create) // 创建角色
 		adminRoute.POST("/role/delete", role.Delete) // 删除角色
 		adminRoute.POST("role/edite", role.Edite)    // 编辑角色
-
-		// 后台权限管理
-		adminRoute.POST("/access/list", access.List)   // 权限列表
-		adminRoute.POST("access/exec", access.Execute) // 设置权限
 	}
 }
