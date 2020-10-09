@@ -30,10 +30,9 @@ func init() {
 	gin.SetMode(mode)
 
 	// 对象struct
-	menu := new(admin.MenuController)     // 菜单类
-	user := new(admin.UserController)     // 用户类
-	role := new(admin.RoleController)     // 角色类
-	access := new(admin.AccessController) // 权限类
+	menu := new(admin.MenuController) // 菜单类
+	user := new(admin.UserController) // 用户类
+	role := new(admin.RoleController) // 角色类
 
 	// 绑定后台路由
 	adminRoute := Route.Group("/admin")
