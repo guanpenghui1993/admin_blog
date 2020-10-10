@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"watt/pkg/services"
 	"watt/pkg/utils"
 	"watt/pkg/validation"
 
@@ -16,11 +17,17 @@ func (a *AccessController) Execute(c *gin.Context) {
 
 	var accessNode validation.AccessData
 
-	if err := m.valid(c, &accessNode); err != nil {
+	if err := a.valid(c, &accessNode); err != nil {
 
-		m.json(c, utils.ERROR, err.Error(), nil)
+		a.json(c, utils.ERROR, err.Error(), nil)
 
 		return
 	}
 
+	if err := services.AccessService.SetRoleNode(&accessNode); err != nil {
+		a.json(c, utils.ERROR, err.Error(), nil)
+		return
+	}
+
+	a.json(c, utils.SUCCESS, "操作成功", nil)
 }

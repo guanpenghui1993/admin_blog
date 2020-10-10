@@ -1,6 +1,13 @@
 package services
 
-import "watt/pkg/repository"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+	"watt/pkg/models"
+	"watt/pkg/repository"
+	"watt/pkg/validation"
+)
 
 type accessService struct {
 }
@@ -30,3 +37,18 @@ func (a *accessService) RouterData(role uint) []string {
 }
 
 // 设置角色权限节点
+func (a *accessService) SetRoleNode(node *validation.AccessData) error {
+
+	var nodeList []models.Access
+
+	menuData := strings.Split(node.Idstring, ",")
+
+	for _, val := range menuData {
+
+		vals, _ := strconv.Atoi(val)
+
+		nodeList = append(nodeList, models.Access{node.Roleid, uint(vals)})
+	}
+	fmt.Printf("--%T--", nodeList)
+	return repository.AccessRep.SetRoleNode(node.Roleid, &nodeList)
+}

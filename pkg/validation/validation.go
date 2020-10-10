@@ -1,12 +1,12 @@
 package validation
 
 type BaseValid struct {
-	Page int `form:"page" v:"required|min:1|max:100 #分页码为空|分页码错误|分页最大不超100"`
-	Size int `form:"size" v:"required|min:10|max:50 #数据大小为空|数据最小10|数据最大50"`
+	Page int `form:"page" v:"required|min:1|max:100|integer #分页码为空|分页码错误|分页最大不超100"`
+	Size int `form:"size" v:"required|min:10|max:50|integer #数据大小为空|数据最小10|数据最大50"`
 }
 
 type BaseID struct {
-	ID int `form:"id" v:"required|min:1 #id不能为空|id错误"`
+	ID int `form:"id" v:"required|min:1|integer #id不能为空|id错误"`
 }
 
 type BaseIdStatus struct {
@@ -15,7 +15,7 @@ type BaseIdStatus struct {
 }
 
 type InsertMenuData struct {
-	Pid      uint   `form:"pid" v:"required #菜单级别不能为空"`
+	Pid      uint   `form:"pid" v:"required|integer #菜单级别不能为空"`
 	Menuname string `form:"name" v:"required|length:2,10 #菜单名称不能为空|菜单名称2-10字符"`
 	Router   string `form:"router" v:"required #菜单路由不能为空"`
 	Icon     string `form:"icon" v:"required #菜单图标不能为空"`
@@ -40,7 +40,7 @@ type UserLogin struct {
 
 // 添加用户
 type InsertUserData struct {
-	Roleid   uint   `form:"roleid" v:"min:0 #角色ID错误"`
+	Roleid   uint   `form:"roleid" v:"integer|min:0 #角色ID错误"`
 	Username string `form:"username" v:"required|length:6,20 #用户名不能为空|用户名须6-20字符"`
 	Password string `form:"password" v:"required|password #密码不能为空|密码任意可见字符，长度在6~18之间"`
 	UserPic  string `form:"pic" v:"required|url #头像不能为空|头像不是有效格式"`
@@ -55,6 +55,6 @@ type RoleData struct {
 
 // 权限
 type AccessData struct {
-	Roleid   uint   `form:"roleid" v:"min:0 #角色ID错误"`
+	Roleid   uint   `form:"roleid" v:"integer #角色ID错误"`
 	Idstring string `form:"menuid" v:"required|stringID #权限节点不能为空|参数需要为大于0整型字符串"`
 }
