@@ -17,12 +17,13 @@ jwt:
 
 # 跨域设置
 cross:
+  domain: "*"
   header: "*"
-  method: "Authorization"
+  method: "POST, OPTIONS, GET, PUT"
 
 # http服务参数
 http:
-  port: 8080
+  port: 80
   readTimeout:  60
   writeTimeout:  60
 
@@ -31,11 +32,11 @@ database:
   
   mysql:
     type: mysql 
-    #host: host.docker.internal
-    host: localhost
+    host: host.docker.internal
+    #host: localhost
     user: root
-    #password: 123456
-    password: root
+    password: 123456
+    #password: root
     port: 3306
     dbname: watt
     charset: utf8

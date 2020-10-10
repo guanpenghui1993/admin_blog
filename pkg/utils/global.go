@@ -13,6 +13,7 @@ const (
 	PARAM_ERROR    = 204
 	FORIDDEN_ERROR = 403
 	SERVER_ERROR   = 500
+	SUPER_ROLE     = 1
 	ERROR_PREFIX   = "[程序错误] - "
 	STRACE_PREFIX  = "[程序日志] - "
 )
@@ -43,6 +44,7 @@ type ConfigYaml struct {
 	}
 
 	Cross struct {
+		Domain string `yaml:"domain,flow"`
 		Header string `yaml:"header,flow"`
 		Method string `yaml:"method,flow"`
 	}

@@ -18,6 +18,20 @@ func newMenuRepository() *MenuRepository {
 	return new(MenuRepository)
 }
 
+// 根据id批量获取菜单路由
+func (m *MenuRepository) GetMenuAllById(ids *[]int) []models.Menu {
+
+	var menu []models.Menu
+
+	err := models.Link.Where("status = 1 AND id IN (?)", *ids).Find(&menu).Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		utils.Error(err)
+	}
+
+	return menu
+}
+
 // 根据ID 获取菜单信息
 func (m *MenuRepository) Info(id uint) models.Menu {
 

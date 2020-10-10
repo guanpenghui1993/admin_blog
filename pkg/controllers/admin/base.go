@@ -32,7 +32,7 @@ func (b *BaseController) valid(c *gin.Context, obj interface{}) error {
 	return nil
 }
 
-// 根据立牌获取用户ID
+// 根据token获取用户ID
 func (b *BaseController) getuid(c *gin.Context) int {
 
 	uid, _ := utils.Parse(c.GetHeader(utils.Setting.Jwt.Header))

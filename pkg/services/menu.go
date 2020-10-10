@@ -32,19 +32,31 @@ func (m *menuService) Insert(param *validation.InsertMenuData) error {
 
 	param.Menuname = html.EscapeString(strings.TrimSpace(param.Menuname))
 
-	param.Router = html.EscapeString(strings.TrimSpace(param.Router))
+	param.Router = html.EscapeString(strings.ToLower(strings.TrimSpace(param.Router)))
 
 	param.Icon = html.EscapeString(strings.TrimSpace(param.Icon))
 
 	return repository.MenuRep.InsertMenu(param)
 }
 
-// 菜单列表
+// 菜单列表（所有）
 func (m *menuService) MenuList() interface{} {
 
 	data := repository.MenuRep.List()
 
 	if len(data) > 0 { // 递归数组
+		return m.menuTree(&data, 0)
+	}
+
+	return data
+}
+
+// 获取指定角色下的菜单列表
+func (m *menuService) MenuRoleList(roleID uint) interface{} {
+
+	data := repository.AccessRep.GetAccessAll(roleID)
+
+	if len(data) > 0 {
 		return m.menuTree(&data, 0)
 	}
 

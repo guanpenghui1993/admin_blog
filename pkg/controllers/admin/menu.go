@@ -16,7 +16,18 @@ type MenuController struct {
 // 获取菜单列表
 func (m *MenuController) List(c *gin.Context) {
 
-	data := services.MenuService.MenuList()
+	uid, _ := utils.Parse(c.GetHeader(utils.Setting.Jwt.Header))
+
+	userList := services.UserService.Info(uid)
+
+	var data interface{}
+
+	if userList.Roleid == utils.SUPER_ROLE {
+
+		data = services.MenuService.MenuList()
+	} else {
+		data = services.MenuService.MenuRoleList(userList.Roleid)
+	}
 
 	m.json(c, utils.SUCCESS, "获取成功", data)
 }

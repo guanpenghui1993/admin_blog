@@ -23,16 +23,17 @@ func init() {
 	// 初始化router引擎
 	Route = gin.New()
 
-	// 全局异常
-	Route.Use(middleware.Recovery(), gin.Logger())
+	// 全局异常 日志 跨域
+	Route.Use(middleware.Recovery(), gin.Logger(), middleware.Cors())
 
 	// 运行模式
 	gin.SetMode(mode)
 
 	// 对象struct
-	menu := new(admin.MenuController) // 菜单类
-	user := new(admin.UserController) // 用户类
-	role := new(admin.RoleController) // 角色类
+	menu := new(admin.MenuController)     // 菜单类
+	user := new(admin.UserController)     // 用户类
+	role := new(admin.RoleController)     // 角色类
+	access := new(admin.AccessController) // 权限类
 
 	// 绑定后台路由
 	adminRoute := Route.Group("/admin")
@@ -40,7 +41,8 @@ func init() {
 	// 后台登录
 	adminRoute.POST("/login", user.Login)
 
-	adminRoute.Use(middleware.CheckLogin()) // 检测登录Token
+	// 检测登录Token跟路由权限
+	adminRoute.Use(middleware.CheckLogin(), middleware.Access())
 	{
 		// 后台用户接口
 		adminRoute.GET("/user/info", user.Info)          // 用户信息
@@ -60,5 +62,8 @@ func init() {
 		adminRoute.POST("/role/create", role.Create) // 创建角色
 		adminRoute.POST("/role/delete", role.Delete) // 删除角色
 		adminRoute.POST("role/edite", role.Edite)    // 编辑角色
+
+		// 设置角色权限
+		adminRoute.POST("access/set", access.Execute) // 设置权限
 	}
 }

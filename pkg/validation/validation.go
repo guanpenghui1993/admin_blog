@@ -52,3 +52,9 @@ type RoleData struct {
 	Rolename string `form:"name" v:"required|length:2,10 #角色名称不能为空|角色名称2-10字符"`
 	Roledesc string `form:"desc" v:"required|length:5,45 #角色描述不能为空|角色描述5-45字符"`
 }
+
+// 权限
+type AccessData struct {
+	Roleid   uint   `form:"roleid" v:"min:0 #角色ID错误"`
+	Idstring string `form:"menuid" v:"required|stringID #权限节点不能为空|参数需要为大于0整型字符串"`
+}
