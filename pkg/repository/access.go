@@ -72,17 +72,17 @@ func (a *AccessRepository) SetRoleNode(roleid uint, data *[]models.Access) error
 
 		if err := tx.Where("roleid = ?", roleid).Delete(&access).Error; err != nil {
 			utils.Error(err)
-			utils.Error("----------------------------------")
 			return err
 		}
 
-		if erradd := tx.Create(data).Error; erradd != nil {
-			utils.Error(erradd)
-			utils.Error("+++++++++++++++++++++++++++++++++++++")
-			return erradd
+		// 不支持批量？
+		for _, node := range *data {
+			if erradd := tx.Create(&node).Error; erradd != nil {
+				utils.Error(erradd)
+				return erradd
+			}
 		}
 
-		// 返回 nil 提交事务
 		return nil
 	})
 

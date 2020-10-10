@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 	"watt/pkg/models"
@@ -49,6 +48,6 @@ func (a *accessService) SetRoleNode(node *validation.AccessData) error {
 
 		nodeList = append(nodeList, models.Access{node.Roleid, uint(vals)})
 	}
-	fmt.Printf("--%T--", nodeList)
+
 	return repository.AccessRep.SetRoleNode(node.Roleid, &nodeList)
 }

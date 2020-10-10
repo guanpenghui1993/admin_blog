@@ -13,7 +13,7 @@ jwt:
   expired: 3600 # 单位秒
   secret: v#z2QeXHYw#%C0VLnl
   issuer: watt_jwt_issuer
-  header: Authorization  
+  header: Authorization
 
 # 跨域设置
 cross:
@@ -23,7 +23,7 @@ cross:
 
 # http服务参数
 http:
-  port: 80
+  port: 8080
   readTimeout:  60
   writeTimeout:  60
 
@@ -32,11 +32,11 @@ database:
   
   mysql:
     type: mysql 
-    host: host.docker.internal
-    #host: localhost
+    #host: host.docker.internal
+    host: localhost
     user: root
-    password: 123456
-    #password: root
+    #password: 123456
+    password: root
     port: 3306
     dbname: watt
     charset: utf8
