@@ -2,12 +2,7 @@
 common:
   debug: false
   autoTable: true #自动初始化表结构
-
-# 日志信息
-log:
-  error_log: logs/go_error.log
-  strace_log: logs/go_strace.log
-
+  logDir: logs #日志目录
 
 # jwt配置
 jwt:

@@ -38,6 +38,14 @@ func Md5(param string) string {
 	return hex.EncodeToString(cipherStr)
 }
 
+// 创建目录
+func Mkdir(dir string) {
+
+	err := os.MkdirAll(dir, os.ModePerm)
+
+	Exit(err)
+}
+
 // 生成token
 func Token(uid uint) (string, error) {
 
@@ -84,21 +92,22 @@ func Parse(token string) (int, error) {
 // 打印日志并终止程序
 func Exit(message interface{}) {
 
-	log.SetPrefix(ERROR_PREFIX)
-
 	log.SetFlags(log.Llongfile | log.Ldate | log.Ltime)
 
 	if Setting.Common.Debug {
+		log.SetPrefix(ERROR_COLOR_PREFIX)
 		log.Fatal(colorString(message, 0))
 	}
 
-	logFile, err := os.OpenFile(Setting.Log.ErrorLog, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	log.SetPrefix(ERROR_PREFIX)
 
-	log.SetOutput(logFile)
+	logFile, err := os.OpenFile(Setting.Common.Log+"/"+ERROR_LOG, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 
 	if err != nil {
 		log.Fatal(colorString(err, 0))
 	}
+
+	log.SetOutput(logFile)
 
 	log.Fatal("Fail to read file -- ", message)
 }
@@ -106,20 +115,21 @@ func Exit(message interface{}) {
 // 打印日志不终止程序
 func Strace(message interface{}) {
 
-	log.SetPrefix(STRACE_PREFIX)
-
 	if Setting.Common.Debug {
+		log.SetPrefix(STRACE_COLOR_PREFIX)
 		log.Printf(colorString(message, 1))
 		return
 	}
 
-	logFile, err := os.OpenFile(Setting.Log.StraceLog, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	log.SetPrefix(STRACE_PREFIX)
 
-	log.SetOutput(logFile)
+	logFile, err := os.OpenFile(Setting.Common.Log+"/"+STRACE_LOG, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 
 	if err != nil {
 		Exit(err)
 	}
+
+	log.SetOutput(logFile)
 
 	log.Printf("%v \n", message)
 }
@@ -127,20 +137,21 @@ func Strace(message interface{}) {
 // 记录错误日志不终止程序
 func Error(message interface{}) {
 
-	log.SetPrefix(STRACE_PREFIX)
-
 	if Setting.Common.Debug {
+		log.SetPrefix(STRACE_COLOR_PREFIX)
 		log.Printf(colorString(message, 0))
 		return
 	}
 
-	logFile, err := os.OpenFile(Setting.Log.ErrorLog, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	log.SetPrefix(STRACE_PREFIX)
 
-	log.SetOutput(logFile)
+	logFile, err := os.OpenFile(Setting.Common.Log+"/"+ERROR_LOG, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 
 	if err != nil {
 		Exit(err)
 	}
+
+	log.SetOutput(logFile)
 
 	log.Printf("%v \n", message)
 }

@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+	"watt/pkg/models"
 	"watt/pkg/router"
 	"watt/pkg/utils"
 )
 
 func main() {
 
-	// 这块协程有个bug
-	// if utils.Setting.Common.AutoTable {
-	// 	go models.AutoMigrateTable()
-	// }
+	if utils.Setting.Common.AutoTable {
+		go models.AutoMigrateTable()
+	}
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", utils.Setting.Http.Port),

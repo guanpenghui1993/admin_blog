@@ -7,15 +7,19 @@ var Setting ConfigYaml
 
 // 全局常量
 const (
-	SUCCESS        = 200
-	ERROR          = 201
-	HEADER_ERROR   = 202
-	PARAM_ERROR    = 204
-	FORIDDEN_ERROR = 403
-	SERVER_ERROR   = 500
-	SUPER_ROLE     = 1
-	ERROR_PREFIX   = "\033[41;37m[程序错误]\033[0m - "
-	STRACE_PREFIX  = "\033[42;37m[程序日志]\033[0m - "
+	SUCCESS             = 200
+	ERROR               = 201
+	HEADER_ERROR        = 202
+	PARAM_ERROR         = 204
+	FORIDDEN_ERROR      = 403
+	SERVER_ERROR        = 500
+	SUPER_ROLE          = 1
+	ERROR_LOG           = "go_error.log"
+	STRACE_LOG          = "go_strace.log"
+	ERROR_PREFIX        = "[程序错误] - "
+	STRACE_PREFIX       = "[程序日志] - "
+	ERROR_COLOR_PREFIX  = "\033[41;37m[程序错误]\033[0m - "
+	STRACE_COLOR_PREFIX = "\033[42;37m[程序日志]\033[0m - "
 )
 
 // 全局响应返回格式
@@ -28,13 +32,9 @@ type Response struct {
 // 全局配置结构
 type ConfigYaml struct {
 	Common struct {
-		Debug     bool `yaml:"debug,flow"`
-		AutoTable bool `yaml:"autoTable,flow"`
-	}
-
-	Log struct {
-		ErrorLog  string `yaml:"error_log,flow"`
-		StraceLog string `yaml:"strace_log,flow"`
+		Debug     bool   `yaml:"debug,flow"`
+		AutoTable bool   `yaml:"autoTable,flow"`
+		Log       string `yaml:"logDir,flow"`
 	}
 
 	Jwt struct {
