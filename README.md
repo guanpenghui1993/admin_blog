@@ -2,6 +2,8 @@
 
 cd watt
 
+mkdir logs
+
 go build -o bin/main main.go
 
 cp -r config/ bin/
