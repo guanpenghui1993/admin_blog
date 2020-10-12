@@ -1,6 +1,6 @@
 # 公共配置
 common:
-  debug: false
+  debug: true
   autoTable: true #自动初始化表结构
   logDir: logs #日志目录
 
