@@ -50,19 +50,6 @@ func (a *AccessRepository) DeleteRoleNode(roleid uint) error {
 	return nil
 }
 
-// 添加角色权限节点
-func (a *AccessRepository) InsertRoleNode(data *[]models.Access) error {
-
-	err := models.Link.Create(data).Error
-
-	if err != nil {
-		utils.Error(err)
-		return errors.New("添加失败")
-	}
-
-	return nil
-}
-
 // 设置角色权限(事务方式)
 func (a *AccessRepository) SetRoleNode(roleid uint, data *[]models.Access) error {
 
