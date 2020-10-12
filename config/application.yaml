@@ -1,6 +1,7 @@
 # 公共配置
 common:
-  debug: true
+  debug: false
+  autoTable: true #自动初始化表结构
 
 # 日志信息
 log:

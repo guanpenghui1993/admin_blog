@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -88,7 +89,7 @@ func Exit(message interface{}) {
 	log.SetFlags(log.Llongfile | log.Ldate | log.Ltime)
 
 	if Setting.Common.Debug {
-		log.Fatal("error -- ", message)
+		log.Fatal(colorString(message, 0))
 	}
 
 	logFile, err := os.OpenFile(Setting.Log.ErrorLog, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
@@ -96,7 +97,7 @@ func Exit(message interface{}) {
 	log.SetOutput(logFile)
 
 	if err != nil {
-		log.Fatal("Fail to read file -- ", err)
+		log.Fatal(colorString(err, 0))
 	}
 
 	log.Fatal("Fail to read file -- ", message)
@@ -108,7 +109,7 @@ func Strace(message interface{}) {
 	log.SetPrefix(STRACE_PREFIX)
 
 	if Setting.Common.Debug {
-		log.Printf("%v \n", message)
+		log.Printf(colorString(message, 1))
 		return
 	}
 
@@ -129,7 +130,7 @@ func Error(message interface{}) {
 	log.SetPrefix(STRACE_PREFIX)
 
 	if Setting.Common.Debug {
-		log.Printf("%v \n", message)
+		log.Printf(colorString(message, 0))
 		return
 	}
 
@@ -142,4 +143,14 @@ func Error(message interface{}) {
 	}
 
 	log.Printf("%v \n", message)
+}
+
+// 返回颜色shell字符串
+func colorString(msg interface{}, color uint) string {
+
+	if color == 0 {
+		return "\033[41;37m " + fmt.Sprintf("%v", msg) + " \033[0m"
+	}
+
+	return "\033[42;37m " + fmt.Sprintf("%v", msg) + " \033[0m"
 }
