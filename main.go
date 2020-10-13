@@ -11,6 +11,8 @@ import (
 
 func main() {
 
+	utils.Mkdir(utils.Setting.Common.Log)
+
 	if utils.Setting.Common.AutoTable {
 		go models.AutoMigrateTable()
 	}

@@ -43,7 +43,9 @@ func Mkdir(dir string) {
 
 	err := os.MkdirAll(dir, os.ModePerm)
 
-	Exit(err)
+	if err != nil {
+		Exit(err)
+	}
 }
 
 // 生成token
