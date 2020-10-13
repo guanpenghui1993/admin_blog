@@ -2,10 +2,8 @@
 
 cd watt
 
-mkdir logs
-
 go build -o bin/main main.go
 
 cp -r config/ bin/
 
-./main  或   ./main -f config/application.yaml
+bin/main  或   bin/main -f config/application.yaml
